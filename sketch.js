@@ -42,10 +42,18 @@ function setup() {
 	dino.scale = .3;
 	dino.mirrorX(1);
 	dino.addAnimation('animate', idleDino);
+
+	// ENVIROMENT
+	bg = loadImage('../assets/enviroment/Cartoon_Forest_BG_01.png');
+
 }
 
 function draw() {
-	background(0);
+	background(bg);
 	drawSprites();
 	fill(255);
+}
+
+function keyPressed(){
+
 }

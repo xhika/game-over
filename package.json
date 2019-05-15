@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/xhika/game-over/issues"
   },
-  "homepage": "https://github.com/xhika/game-over#readme"
+  "homepage": "https://github.com/xhika/game-over#readme",
+  "directories": {
+    "lib": "lib"
+  }
 }
