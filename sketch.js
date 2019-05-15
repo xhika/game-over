@@ -34,18 +34,41 @@ function preload() {
 const width = window.innerWidth;
 const height = window.innerHeight;
 
+let [dinoX, dinoY, xspeed, yspeed] = [0, 0, 1, 1];
+let GRAVITY = 0.3;
+
 function setup() {
 	createCanvas(width, height);
-
 	// Center Dino
 	dino = createSprite(width / 2, height / 2);
 	dino.scale = .3;
-	dino.mirrorX(1);
 	dino.addAnimation('animate', idleDino);
 }
 
 function draw() {
 	background(0);
 	drawSprites();
-	fill(255);
 }
+
+function keyPressed() {
+	if(key === 'a' || keyCode === LEFT_ARROW) {
+		dino.addAnimation('animate', walkingDino);
+		dino.mirrorX(-1);
+		dino.setSpeed(1, 180);
+	} else if(key === 'd' || keyCode === RIGHT_ARROW) {
+		dino.addAnimation('animate', walkingDino);
+		dino.mirrorX(1);
+		dino.setSpeed(1, 0);
+	} else if(key === 'w' || keyCode === UP_ARROW) {
+		dino.addAnimation('animate', jumpingDino)
+		dino.setSpeed(1, -90);
+	} else if(key === 's' || keyCode === DOWN_ARROW) {
+		dino.addAnimation('animate', walkingDino);
+		dino.setSpeed(1, 90);
+	} else {
+		dino.setSpeed(0)
+		dino.addAnimation('animate', idleDino);
+	}
+}
+
+
