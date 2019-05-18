@@ -1,7 +1,6 @@
 // Preload animations
 function preload() {
 	environment = loadImage('../assets/environment/Cartoon_Forest_BG_01.png');
-
 	idleDino = loadAnimation('../assets/dino/Idle1.png', '../assets/dino/Idle2.png',
 		'../assets/dino/Idle3.png', '../assets/dino/Idle4.png',
 		'../assets/dino/Idle5.png', '../assets/dino/Idle6.png',
@@ -39,8 +38,8 @@ let y;
 let scrollSpeed = 1;
 
 // Get viewport
-const width = innerWidth;
-const height = innerHeight;
+const width = window.innerWidth;
+const height = window.innerHeight;
 
 let [dinoX, dinoY, xspeed, yspeed] = [0, 0, 1, 1];
 let GRAVITY = 0.3;
@@ -65,7 +64,6 @@ function draw() {
 	if (y < -width) {
 		y = width;
 	}
-
 	drawSprites();
 }
 
