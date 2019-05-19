@@ -41,12 +41,19 @@ let scrollSpeed = 1;
 const width = window.innerWidth;
 const height = window.innerHeight;
 
+// Movement properties
+let GROUND = height / 2 + 300
+let JUMP = -10;
+let GRAVITY = 0.5;
+let JUMPLIMIT = 2
+let JUMPQUEUE = 0
+
 
 function setup() {
 	createCanvas(width, height);
 	y = width;
 	// Center Dino
-	dino = createSprite(width / 2, height / 2 + 300);
+	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
 }
@@ -62,6 +69,13 @@ function draw() {
 	if (y < -width) {
 		y = width;
 	}
+	// Add gravity to dino's position when jumping
+	if (dino.position.y < GROUND) {
+		dino.velocity.y += GRAVITY
+	} else {
+		dino.velocity.y = 0
+		JUMPQUEUE = 0
+	}
 	drawSprites();
 }
 function keyPressed() {
@@ -76,8 +90,11 @@ function keyPressed() {
 		dino.setSpeed(1, 0);
 	}
 	if(key === 'w' || keyCode === UP_ARROW) {
-		dino.addAnimation('animate', jumpingDino)
-		dino.setVelocity(5,-5)
+		if (JUMPQUEUE < JUMPLIMIT) {
+			dino.addAnimation('animate', jumpingDino)
+			dino.velocity.y = JUMP;
+			JUMPQUEUE++;
+		}
 	}
 	if(keyIsDown(LEFT_ARROW) && keyIsDown(SHIFT)) {
 		dino.addAnimation('animate', runningDino);
