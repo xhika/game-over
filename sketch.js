@@ -62,15 +62,26 @@ let JUMPQUEUE = 0
 function setup() {
 	createCanvas(width, height);
 	y = width;
-	// Center Dino
+
+	// Create and position Dino
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
-	enemy = createSprite(width / 2 + 300, GROUND);
+	dino.setCollider("rectangle", -30, -5, 204, 390);
+
+	// Create and position enemy
+	enemy = createSprite(width / 2 + 200, GROUND);
 	enemy.scale = .3;
-	enemy.addAnimation('animate', walkingEnemy);
-	enemy.mirrorX(-1);
+	// enemy.addAnimation('animate', walkingEnemy);
 	enemy.addAnimation('animate', attackEnemy);
+	enemy.setCollider("rectangle", 20, 5, 204, 390);
+	enemy.mirrorX(-1);
+
+	// Debug on sprites
+	console.log("Dino object", dino);
+	console.log("Enemy object", enemy);
+	dino.debug = true;
+	enemy.debug = true;
 }
 
 function draw() {
@@ -90,6 +101,19 @@ function draw() {
 	} else {
 		dino.velocity.y = 0
 		JUMPQUEUE = 0
+	}
+	// Push dino back to prevent getting out of view
+	if(dino.position.x < 0) {
+		dino.position.x += 5;
+	}
+	if(dino.position.x > width) {
+		dino.position.x += -5;
+	}
+
+	// Detect collision on position
+	if(dino.position.x > enemy.position.x) {
+		console.log('bump with sprite')
+		dino.velocity.x += -10;
 	}
 	drawSprites();
 }
