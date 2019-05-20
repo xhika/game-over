@@ -29,6 +29,17 @@ function preload() {
 		'../assets/dino/Dead5.png', '../assets/dino/Dead6.png',
 		'../assets/dino/Dead7.png', '../assets/dino/Dead8.png'
 	);
+	walkingEnemy = loadAnimation('../assets/enemies/Walk1.png', '../assets/enemies/Walk2.png',
+		'../assets/enemies/Walk3.png', '../assets/enemies/Walk4.png',
+		'../assets/enemies/Walk5.png', '../assets/enemies/Walk6.png',
+		'../assets/enemies/Walk7.png', '../assets/enemies/Walk8.png',
+		'../assets/enemies/Walk9.png', '../assets/enemies/Walk10.png'
+	 );
+	attackEnemy = loadAnimation('../assets/enemies/Attack1.png', '../assets/enemies/Attack2.png',
+		'../assets/enemies/Attack3.png', '../assets/enemies/Attack4.png',
+		'../assets/enemies/Attack5.png', '../assets/enemies/Attack6.png',
+		'../assets/enemies/Attack7.png'
+	);
 }
 
 // Environment properties
@@ -48,7 +59,6 @@ let GRAVITY = 0.5;
 let JUMPLIMIT = 2
 let JUMPQUEUE = 0
 
-
 function setup() {
 	createCanvas(width, height);
 	y = width;
@@ -56,6 +66,11 @@ function setup() {
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
+	enemy = createSprite(width / 2 + 300, GROUND);
+	enemy.scale = .3;
+	enemy.addAnimation('animate', walkingEnemy);
+	enemy.mirrorX(-1);
+	enemy.addAnimation('animate', attackEnemy);
 }
 
 function draw() {
