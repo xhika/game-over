@@ -55,7 +55,7 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.5;
+let GRAVITY = 0.2;
 let JUMPLIMIT = 2
 let JUMPQUEUE = 0
 
@@ -67,13 +67,12 @@ function setup() {
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
-	dino.setCollider("rectangle", -30, -5, 204, 390);
+	dino.setCollider("rectangle", -30, 5, 204, 390);
 
 	// Create and position enemy
 	enemy = createSprite(width / 2 + 200, GROUND);
 	enemy.scale = .3;
-	// enemy.addAnimation('animate', walkingEnemy);
-	enemy.addAnimation('animate', attackEnemy);
+	enemy.addAnimation('animate', walkingEnemy);
 	enemy.setCollider("rectangle", 20, 5, 204, 390);
 	enemy.mirrorX(-1);
 
@@ -109,12 +108,11 @@ function draw() {
 	if(dino.position.x > width) {
 		dino.position.x += -5;
 	}
-
-	// Detect collision on position
-	if(dino.position.x > enemy.position.x) {
-		console.log('bump with sprite')
+	// Detect collision
+	dino.collide(enemy, pushBack = () => {
+		enemy.addAnimation('animate', attackEnemy);
 		dino.velocity.x += -10;
-	}
+	});
 	drawSprites();
 }
 function keyPressed() {
@@ -131,7 +129,7 @@ function keyPressed() {
 	if(key === 'w' || keyCode === UP_ARROW) {
 		if (JUMPQUEUE < JUMPLIMIT) {
 			dino.addAnimation('animate', jumpingDino)
-			dino.velocity.y = JUMP;
+			dino.velocity.y += JUMP;
 			JUMPQUEUE++;
 		}
 	}
