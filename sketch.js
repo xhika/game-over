@@ -55,22 +55,32 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.5;
+let GRAVITY = 0.2;
 let JUMPLIMIT = 2
 let JUMPQUEUE = 0
 
 function setup() {
 	createCanvas(width, height);
 	y = width;
-	// Center Dino
+
+	// Create and position Dino
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
-	enemy = createSprite(width / 2 + 300, GROUND);
+	dino.setCollider("rectangle", -30, 5, 204, 390);
+
+	// Create and position enemy
+	enemy = createSprite(width / 2 + 200, GROUND);
 	enemy.scale = .3;
 	enemy.addAnimation('animate', walkingEnemy);
+	enemy.setCollider("rectangle", 20, 5, 204, 390);
 	enemy.mirrorX(-1);
-	enemy.addAnimation('animate', attackEnemy);
+
+	// Debug on sprites
+	console.log("Dino object", dino);
+	console.log("Enemy object", enemy);
+	dino.debug = true;
+	enemy.debug = true;
 }
 
 function draw() {
@@ -91,6 +101,18 @@ function draw() {
 		dino.velocity.y = 0
 		JUMPQUEUE = 0
 	}
+	// Push dino back to prevent getting out of view
+	if(dino.position.x < 0) {
+		dino.position.x += 5;
+	}
+	if(dino.position.x > width) {
+		dino.position.x += -5;
+	}
+	// Detect collision
+	dino.collide(enemy, pushBack = () => {
+		enemy.addAnimation('animate', attackEnemy);
+		dino.velocity.x += -10;
+	});
 	drawSprites();
 }
 function keyPressed() {
@@ -107,7 +129,7 @@ function keyPressed() {
 	if(key === 'w' || keyCode === UP_ARROW) {
 		if (JUMPQUEUE < JUMPLIMIT) {
 			dino.addAnimation('animate', jumpingDino)
-			dino.velocity.y = JUMP;
+			dino.velocity.y += JUMP;
 			JUMPQUEUE++;
 		}
 	}
