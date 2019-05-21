@@ -115,6 +115,13 @@ function draw() {
 	});
 	drawSprites();
 }
+
+// Resize window
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
+
+// Movement
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
 		dino.addAnimation('animate', walkingDino);
