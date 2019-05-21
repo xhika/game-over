@@ -55,7 +55,7 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.2;
+let GRAVITY = 0.4;
 let JUMPLIMIT = 2
 let JUMPQUEUE = 0
 
@@ -116,39 +116,49 @@ function draw() {
 	drawSprites();
 }
 function keyPressed() {
-	if (key === 'a' || keyCode === LEFT_ARROW) {
+	if (keyIsDown(LEFT_ARROW) || key === 'a') {
 		dino.addAnimation('animate', walkingDino);
 		dino.mirrorX(-1);
 		dino.setSpeed(1, 180);
 	}
-	if(key === 'd' || keyCode === RIGHT_ARROW) {
+	if(keyIsDown(RIGHT_ARROW) || key === 'd')  {
 		dino.addAnimation('animate', walkingDino);
 		dino.mirrorX(1);
 		dino.setSpeed(1, 0);
 	}
-	if(key === 'w' || keyCode === UP_ARROW) {
+	if(keyIsDown(UP_ARROW) || key === 'w') {
 		if (JUMPQUEUE < JUMPLIMIT) {
 			dino.addAnimation('animate', jumpingDino)
-			dino.velocity.y += JUMP;
+			dino.velocity.y = JUMP;
+			JUMPQUEUE++;
+			console.log(JUMPQUEUE)
+		}
+	}
+	if(keyIsDown(UP_ARROW) || key === 'W' && keyIsDown(SHIFT) || key === 'D') {
+		if (JUMPQUEUE < JUMPLIMIT) {
+			dino.addAnimation('animate', jumpingDino)
+			dino.velocity.y = JUMP;
 			JUMPQUEUE++;
 		}
 	}
-	if(keyIsDown(LEFT_ARROW) && keyIsDown(SHIFT)) {
+	if(keyIsDown(SHIFT) && keyIsDown(LEFT_ARROW)
+	|| keyIsDown(SHIFT) && key === 'A') {
 		dino.addAnimation('animate', runningDino);
 		dino.setSpeed(4, 180);
 		dino.mirrorX(-1);
 	}
-	if(keyIsDown(RIGHT_ARROW) && keyIsDown(SHIFT)) {
+	if(keyIsDown(SHIFT) && keyIsDown(RIGHT_ARROW)
+	|| keyIsDown(SHIFT) && key === 'D') {
 		dino.addAnimation('animate', runningDino);
 		dino.setSpeed(4, 0);
-	}
-	if(key === 's' || keyCode === DOWN_ARROW) {
-		dino.addAnimation('animate', walkingDino);
-		dino.setSpeed(1, 90);
+		dino.mirrorX(1);
 	}
 }
 function keyReleased() {
-	if(RIGHT_ARROW !== keyDown) {
+	if(! keyIsDown()) {
+		if(JUMPQUEUE < JUMPLIMIT && keyIsDown(UP_ARROW) || key === 'w' || key === 'W') {
+			return false
+		}
 		dino.addAnimation('animate', idleDino);
 		dino.setSpeed(0, 0);
 	}
