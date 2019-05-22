@@ -138,10 +138,9 @@ function keyPressed() {
 			dino.addAnimation('animate', jumpingDino)
 			dino.velocity.y = JUMP;
 			JUMPQUEUE++;
-			console.log(JUMPQUEUE)
 		}
 	}
-	if(keyIsDown(UP_ARROW) || key === 'W' && keyIsDown(SHIFT) || key === 'D') {
+	if(keyIsDown(SHIFT) && key === 'W') {
 		if (JUMPQUEUE < JUMPLIMIT) {
 			dino.addAnimation('animate', jumpingDino)
 			dino.velocity.y = JUMP;
@@ -162,11 +161,9 @@ function keyPressed() {
 	}
 }
 function keyReleased() {
-	if(! keyIsDown()) {
-		if(JUMPQUEUE < JUMPLIMIT && keyIsDown(UP_ARROW) || key === 'w' || key === 'W') {
+		if(keyCode === UP_ARROW || key === 'W' || key === 'w') {
 			return false
 		}
 		dino.addAnimation('animate', idleDino);
 		dino.setSpeed(0, 0);
-	}
 }
