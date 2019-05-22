@@ -59,6 +59,9 @@ let GRAVITY = 0.4;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
+let ENEMYCOUNT = 10;
+
+let enemies = [];
 
 function setup() {
 	createCanvas(width, height);
@@ -70,23 +73,26 @@ function setup() {
 	dino.addAnimation('animate', idleDino);
 	dino.setCollider("rectangle", 0, 5, 204, 390);
 
-
 	let randomEnemySpeed = random(3, 7);
-	for (let i = 0; i < 7; i++) {
-		enemy = createSprite(width -random(100- 1000), GROUND);
+	for (let i = 0; i < ENEMYCOUNT; i++) {
+		let enemy = createSprite(width -random(100- 1000), GROUND);
 		enemy.scale = .3;
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
 		enemy.mirrorX(-1);
-		enemy.debug = true;
 		enemy.setSpeed(randomEnemySpeed, 180)
+
+		enemies.push(enemy)
+
+		// Debug enemies
+		// enemy.debug = true;
+		// console.log("Enemy object", enemy)
 	}
 
-	// Debug on sprites
-	console.log("Dino object", dino);
-	console.log("Enemy object", enemy);
-	dino.debug = true;
-	enemy.debug = true;
+	// Debug Dino
+	// console.log("Dino object", dino);
+	// dino.debug = true;
+
 	dino.addAnimation('dead', deadDino)
 	dino.addAnimation('jump', jumpingDino)
 }
@@ -117,36 +123,39 @@ function draw() {
 		dino.position.x += -5;
 	}
 	// Detect collision
-	dino.collide(enemy, pushBack = () => {
-		console.log('hit?')
-		enemy.addAnimation('animate', attackEnemy);
-		dino.velocity.x += -10;
-		dino.velocity.y += -5;
-		if(dino.position === GROUND) {
-			dino.velocity.y += +15
-		}
-		if(HEALTH > 0) {
-			HEALTH--;
-			console.log(`Life remaining: ${HEALTH}`)
-		}
-		if(HEALTH === 0) {
-			dino.scale = 0.26;
-			dino.changeAnimation('dead')
-			setTimeout(function() {
-				dino.animation.stop();
-			}, 500);
-			setTimeout(function() {
-				noLoop()
-				text('Game Over :/', width / 4, height / 2);
-				textSize(100)
-				fill(255)
-				removeSprite(dino)
-				removeSprite(enemy)
-			}, 1000);
+	enemies.forEach((enemy) => {
+		dino.collide(enemy, pushBack = () => {
+			enemy.addAnimation('animate', attackEnemy);
+			dino.velocity.x += -10;
+			dino.velocity.y += -5;
 
+			if(dino.position === GROUND) {
+				dino.velocity.y += +15
+			}
+			if(HEALTH > 0) {
+				HEALTH--;
+				// console.log(`Life remaining: ${HEALTH}`);
+			}
+			if(HEALTH === 0) {
+				dino.scale = 0.26;
+				dino.changeAnimation('dead')
+				setTimeout(function() {
+					dino.animation.stop();
+				}, 500);
+				setTimeout(function() {
+					noLoop()
+					text('Game Over :/', width / 4, height / 2);
+					textSize(100)
+					fill(255)
+					removeSprite(dino)
+					removeSprite(enemy)
 
-		}
+				}, 1000);
+
+			}
+		});
 	});
+
 	drawSprites();
 }
 
