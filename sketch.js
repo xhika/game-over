@@ -46,7 +46,7 @@ function preload() {
 let bgImg;
 let x = 0;
 let y;
-let scrollSpeed = 1;
+let scrollSpeed = 0.5;
 
 // Get viewport
 const width = window.innerWidth;
@@ -67,20 +67,18 @@ function setup() {
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
-	dino.setCollider("rectangle", -30, 5, 204, 390);
 
-	// Create and position enemy
-	enemy = createSprite(width / 2 + 200, GROUND);
-	enemy.scale = .3;
-	enemy.addAnimation('animate', walkingEnemy);
-	enemy.setCollider("rectangle", 20, 5, 204, 390);
-	enemy.mirrorX(-1);
+	let randomEnemySpeed = random(1.7);
 
-	// Debug on sprites
-	console.log("Dino object", dino);
-	console.log("Enemy object", enemy);
-	dino.debug = true;
-	enemy.debug = true;
+	for (let i = 0; i < 7; i++) {
+		enemy = createSprite(width -random(100- 10000), GROUND);
+		enemy.scale = .3;
+		enemy.addAnimation('animate', walkingEnemy);
+		enemy.setCollider("rectangle", 20, 5, 204, 390);
+		enemy.mirrorX(-1);
+		enemy.debug = true;
+		enemy.setSpeed(randomEnemySpeed, 180)
+	}
 }
 
 function draw() {
