@@ -46,7 +46,7 @@ function preload() {
 let bgImg;
 let x = 0;
 let y;
-let scrollSpeed = 1;
+let scrollSpeed = 0.5;
 
 // Get viewport
 const width = window.innerWidth;
@@ -66,11 +66,18 @@ function setup() {
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
-	enemy = createSprite(width / 2 + 300, GROUND);
-	enemy.scale = .3;
-	enemy.addAnimation('animate', walkingEnemy);
-	enemy.mirrorX(-1);
-	enemy.addAnimation('animate', attackEnemy);
+
+	let randomEnemySpeed = random(1.7);
+
+	for (let i = 0; i < 7; i++) {
+		enemy = createSprite(width -random(100- 10000), GROUND);
+		enemy.scale = .3;
+		enemy.addAnimation('animate', walkingEnemy);
+		enemy.setCollider("rectangle", 20, 5, 204, 390);
+		enemy.mirrorX(-1);
+		enemy.debug = true;
+		enemy.setSpeed(randomEnemySpeed, 180)
+	}
 }
 
 function draw() {
