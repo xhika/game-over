@@ -67,7 +67,7 @@ function setup() {
 	dino.scale = .3;
 	dino.addAnimation('animate', idleDino);
 
-	let randomEnemySpeed = random(1.7);
+	let randomEnemySpeed = random(1, 7);
 
 	for (let i = 0; i < 7; i++) {
 		enemy = createSprite(width -random(100- 10000), GROUND);
