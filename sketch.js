@@ -45,8 +45,8 @@ function preload() {
 // Environment properties
 let bgImg;
 let x = 0;
-let y;
-let scrollSpeed = 0.5;
+let newX;
+let scrollSpeed = 0.2;
 
 // Get viewport
 const width = window.innerWidth;
@@ -61,7 +61,7 @@ let JUMPQUEUE = 0
 
 function setup() {
 	createCanvas(width, height);
-	y = width;
+	newX = width;
 
 	// Create and position Dino
 	dino = createSprite(width / 2, GROUND);
@@ -82,15 +82,17 @@ function setup() {
 }
 
 function draw() {
+
 	image(environment, x, 0, width, height);
-	image(environment, y, 0, width, height);
+	image(environment, newX, 0, width, height);
 	x -= scrollSpeed;
-	y -= scrollSpeed;
+	newX -= scrollSpeed;
+
 	if (x < -width) {
 		x = width;
 	}
-	if (y < -width) {
-		y = width;
+	if (newX < -width) {
+		newX = width;
 	}
 	// Add gravity to dino's position when jumping
 	if (dino.position.y < GROUND) {
