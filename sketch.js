@@ -1,5 +1,6 @@
 // Preload animations
 function preload() {
+	nyan = loadAnimation('../assets/nyan.png');
 	environment = loadImage('../assets/environment/Cartoon_Forest_BG_01.png');
 	idleDino = loadAnimation('../assets/dino/Idle1.png', '../assets/dino/Idle2.png',
 		'../assets/dino/Idle3.png', '../assets/dino/Idle4.png',
@@ -55,7 +56,7 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.4;
+let GRAVITY = 0.3;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
@@ -73,9 +74,17 @@ function setup() {
 	dino.addAnimation('animate', idleDino);
 	dino.setCollider("rectangle", 0, 5, 204, 390);
 
-	let randomEnemySpeed = random(3, 7);
+	//Create Nyan
+	nyanCat = createSprite(width - 100, height / 2);
+	nyanCat.scale = 0.3
+	nyanCat.addAnimation('animate', nyan);
+	nyanCat.setSpeed(random(2, 50), 180)
+	nyanCat.mirrorX(-1);
+
 	for (let i = 0; i < ENEMYCOUNT; i++) {
-		let enemy = createSprite(width -random(100- 1000), GROUND);
+		let randomEnemySpeed = random(1, 7);
+		let enemy = createSprite(width + 500, GROUND);
+		enemy.position.x += random(0, 10000);
 		enemy.scale = .3;
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
