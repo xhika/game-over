@@ -1,5 +1,6 @@
 // Preload animations
 function preload() {
+	startGameImg = loadImage('../assets/environment/start-screen.png');
 	nyan = loadAnimation('../assets/nyan.png');
 	environment = loadImage('../assets/environment/Cartoon_Forest_BG_01.png');
 	idleDino = loadAnimation('../assets/dino/Idle1.png', '../assets/dino/Idle2.png',
@@ -48,6 +49,7 @@ let bgImg;
 let x = 0;
 let newX;
 let scrollSpeed = 0.2;
+let welcomScreen = 0;
 
 // Get viewport
 const width = window.innerWidth;
@@ -90,24 +92,32 @@ function setup() {
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
 		enemy.mirrorX(-1);
 		enemy.setSpeed(randomEnemySpeed, 180)
-
 		enemies.push(enemy)
-
-		// Debug enemies
-		// enemy.debug = true;
-		// console.log("Enemy object", enemy)
 	}
-
-	// Debug Dino
-	// console.log("Dino object", dino);
-	// dino.debug = true;
-
 	dino.addAnimation('dead', deadDino)
 	dino.addAnimation('jump', jumpingDino)
 }
 
 function draw() {
+	if (welcomScreen == 0) {
+		startScreen()
+	} else if (welcomScreen == 1) {
+		gameOn()
+	}
+}
 
+function startScreen() {
+	image(startGameImg, x, 0, width, height);
+	textAlign(CENTER);
+	textSize(60);
+	fill(255);
+	text('WELCOME TO DINO GAME', width / 2, height / 3)
+	textSize(40);
+	fill(255);
+	text('CLICK TO START', width / 2, height / 2 + 20);
+}
+
+function gameOn() {
 	image(environment, x, 0, width, height);
 	image(environment, newX, 0, width, height);
 	x -= scrollSpeed;
@@ -127,47 +137,47 @@ function draw() {
 		JUMPQUEUE = 0
 	}
 	// Push dino back to prevent getting out of view
-	if(dino.position.x < 0) {
+	if (dino.position.x < 0) {
 		dino.position.x += 5;
 	}
-	if(dino.position.x > width) {
+	if (dino.position.x > width) {
 		dino.position.x += -5;
 	}
-	// Detect collision
+	collisionDetect();
+	drawSprites();
+}
+
+// Detect collision
+function collisionDetect() {
 	enemies.forEach((enemy) => {
 		dino.collide(enemy, pushBack = () => {
 			enemy.addAnimation('animate', attackEnemy);
 			dino.velocity.x += -10;
 			dino.velocity.y += -5;
 
-			if(dino.position === GROUND) {
+			if (dino.position === GROUND) {
 				dino.velocity.y += +15
 			}
-			if(HEALTH > 0) {
+			if (HEALTH > 0) {
 				HEALTH--;
-				// console.log(`Life remaining: ${HEALTH}`);
 			}
-			if(HEALTH === 0) {
+			if (HEALTH === 0) {
 				dino.scale = 0.26;
 				dino.changeAnimation('dead')
-				setTimeout(function() {
+				setTimeout(function () {
 					dino.animation.stop();
 				}, 500);
-				setTimeout(function() {
+				setTimeout(function () {
 					noLoop()
 					text('Game Over :/', width / 4, height / 2);
 					textSize(100)
 					fill(255)
 					removeSprite(dino)
 					removeSprite(enemy)
-
 				}, 1000);
-
 			}
 		});
 	});
-
-	drawSprites();
 }
 
 // Resize window
@@ -175,7 +185,18 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-// Movement
+function mousePressed() {
+	setTimeout(function () {
+	if (welcomScreen == 0) {
+		welcomScreen = 1
+	}
+	else if (welcomScreen == 2) {
+		welcomScreen = 0
+	}
+	},500);
+}
+
+// // Movement
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
 		dino.addAnimation('animate', walkingDino);
@@ -214,6 +235,7 @@ function keyPressed() {
 		dino.mirrorX(1);
 	}
 }
+
 function keyReleased() {
 	if(keyCode === UP_ARROW || key === 'W' || key === 'w') {
 		return false
