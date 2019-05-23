@@ -15,6 +15,7 @@ function preload() {
 		'../assets/dino/Walk7.png', '../assets/dino/Walk8.png',
 		'../assets/dino/Walk9.png', '../assets/dino/Walk10.png'
 	);
+	walkingDino.frameDelay = 5
 	runningDino = loadAnimation('../assets/dino/Run1.png', '../assets/dino/Run2.png',
 		'../assets/dino/Run3.png', '../assets/dino/Run4.png',
 		'../assets/dino/Run5.png', '../assets/dino/Run6.png',
@@ -58,7 +59,7 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.3;
+let GRAVITY = 0.4;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
@@ -73,7 +74,7 @@ function setup() {
 	// Create and position Dino
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
-	dino.addAnimation('animate', idleDino);
+	dino.addAnimation('animate', walkingDino);
 	dino.setCollider("rectangle", 0, 5, 204, 390);
 
 	//Create Nyan
@@ -199,14 +200,14 @@ function mousePressed() {
 // // Movement
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
-		dino.addAnimation('animate', walkingDino);
+		dino.addAnimation('animate', runningDino);
 		dino.mirrorX(-1);
-		dino.setSpeed(1, 180);
+		dino.setSpeed(4, 180);
 	}
 	if(keyIsDown(RIGHT_ARROW) || key === 'd')  {
-		dino.addAnimation('animate', walkingDino);
+		dino.addAnimation('animate', runningDino);
 		dino.mirrorX(1);
-		dino.setSpeed(1, 0);
+		dino.setSpeed(4, 0);
 	}
 	if(keyIsDown(UP_ARROW) || key === 'w') {
 		if (JUMPQUEUE < JUMPLIMIT) {
@@ -222,24 +223,12 @@ function keyPressed() {
 			JUMPQUEUE++;
 		}
 	}
-	if(keyIsDown(SHIFT) && keyIsDown(LEFT_ARROW)
-	|| keyIsDown(SHIFT) && key === 'A') {
-		dino.addAnimation('animate', runningDino);
-		dino.setSpeed(4, 180);
-		dino.mirrorX(-1);
-	}
-	if(keyIsDown(SHIFT) && keyIsDown(RIGHT_ARROW)
-	|| keyIsDown(SHIFT) && key === 'D') {
-		dino.addAnimation('animate', runningDino);
-		dino.setSpeed(4, 0);
-		dino.mirrorX(1);
-	}
 }
 
 function keyReleased() {
 	if(keyCode === UP_ARROW || key === 'W' || key === 'w') {
 		return false
 	}
-	dino.addAnimation('animate', idleDino);
+	dino.addAnimation('animate', walkingDino);
 	dino.setSpeed(0, 0);
 }
