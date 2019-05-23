@@ -15,6 +15,7 @@ function preload() {
 		'../assets/dino/Walk7.png', '../assets/dino/Walk8.png',
 		'../assets/dino/Walk9.png', '../assets/dino/Walk10.png'
 	);
+	walkingDino.frameDelay = 5
 	runningDino = loadAnimation('../assets/dino/Run1.png', '../assets/dino/Run2.png',
 		'../assets/dino/Run3.png', '../assets/dino/Run4.png',
 		'../assets/dino/Run5.png', '../assets/dino/Run6.png',
@@ -36,7 +37,7 @@ function preload() {
 		'../assets/enemies/Walk5.png', '../assets/enemies/Walk6.png',
 		'../assets/enemies/Walk7.png', '../assets/enemies/Walk8.png',
 		'../assets/enemies/Walk9.png', '../assets/enemies/Walk10.png'
-	 );
+	);
 	attackEnemy = loadAnimation('../assets/enemies/Attack1.png', '../assets/enemies/Attack2.png',
 		'../assets/enemies/Attack3.png', '../assets/enemies/Attack4.png',
 		'../assets/enemies/Attack5.png', '../assets/enemies/Attack6.png',
@@ -48,7 +49,7 @@ function preload() {
 let bgImg;
 let x = 0;
 let newX;
-let scrollSpeed = 0.2;
+let scrollSpeed = 0.5;
 let welcomScreen = 0;
 
 // Get viewport
@@ -58,7 +59,7 @@ const height = window.innerHeight;
 // Movement properties
 let GROUND = height / 2 + 300
 let JUMP = -10;
-let GRAVITY = 0.3;
+let GRAVITY = 0.4;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
@@ -73,8 +74,10 @@ function setup() {
 	// Create and position Dino
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
-	dino.addAnimation('animate', idleDino);
+	dino.addAnimation('animate', walkingDino);
 	dino.setCollider("rectangle", 0, 5, 204, 390);
+	dino.addAnimation('dead', deadDino)
+	dino.addAnimation('jump', jumpingDino)
 
 	//Create Nyan
 	nyanCat = createSprite(width - 100, height / 2);
@@ -83,26 +86,30 @@ function setup() {
 	nyanCat.setSpeed(random(2, 50), 180)
 	nyanCat.mirrorX(-1);
 
+	spawningEnemies();
+}
+
+function spawningEnemies() {
 	for (let i = 0; i < ENEMYCOUNT; i++) {
 		let randomEnemySpeed = random(1, 7);
 		let enemy = createSprite(width + 500, GROUND);
 		enemy.position.x += random(0, 10000);
-		enemy.scale = .3;
+		enemy.scale = .3
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
 		enemy.mirrorX(-1);
 		enemy.setSpeed(randomEnemySpeed, 180)
 		enemies.push(enemy)
-	}
-	dino.addAnimation('dead', deadDino)
-	dino.addAnimation('jump', jumpingDino)
+	};
 }
 
 function draw() {
 	if (welcomScreen == 0) {
 		startScreen()
 	} else if (welcomScreen == 1) {
-		gameOn()
+		gameOn();
+		drawSprites();
+		collisionDetect();
 	}
 }
 
@@ -111,10 +118,8 @@ function startScreen() {
 	textAlign(CENTER);
 	textSize(60);
 	fill(255);
-	text('WELCOME TO DINO GAME', width / 2, height / 3)
-	textSize(40);
-	fill(255);
-	text('CLICK TO START', width / 2, height / 2 + 20);
+	text('WELCOME TO DINO GAME', width / 2, height / 4)
+	text('CLICK TO START', width / 2, height / 2.5);
 }
 
 function gameOn() {
@@ -143,8 +148,6 @@ function gameOn() {
 	if (dino.position.x > width) {
 		dino.position.x += -5;
 	}
-	collisionDetect();
-	drawSprites();
 }
 
 // Detect collision
@@ -178,68 +181,58 @@ function collisionDetect() {
 			}
 		});
 	});
-}
+};
 
 // Resize window
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+	resizeCanvas(windowWidth, windowHeight);
 }
 
 function mousePressed() {
 	setTimeout(function () {
-	if (welcomScreen == 0) {
-		welcomScreen = 1
-	}
-	else if (welcomScreen == 2) {
-		welcomScreen = 0
-	}
-	},500);
+		if (welcomScreen == 0) {
+			welcomScreen = 1
+		} else if (welcomScreen == 2) {
+			welcomScreen = 0
+		}
+	}, 500);
 }
 
 // // Movement
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
-		dino.addAnimation('animate', walkingDino);
-		dino.mirrorX(-1);
-		dino.setSpeed(1, 180);
-	}
-	if(keyIsDown(RIGHT_ARROW) || key === 'd')  {
-		dino.addAnimation('animate', walkingDino);
-		dino.mirrorX(1);
-		dino.setSpeed(1, 0);
-	}
-	if(keyIsDown(UP_ARROW) || key === 'w') {
-		if (JUMPQUEUE < JUMPLIMIT) {
-			dino.addAnimation('animate', jumpingDino)
-			dino.velocity.y = JUMP;
-			JUMPQUEUE++;
-		}
-	}
-	if(keyIsDown(SHIFT) && key === 'W') {
-		if (JUMPQUEUE < JUMPLIMIT) {
-			dino.addAnimation('animate', jumpingDino)
-			dino.velocity.y = JUMP;
-			JUMPQUEUE++;
-		}
-	}
-	if(keyIsDown(SHIFT) && keyIsDown(LEFT_ARROW)
-	|| keyIsDown(SHIFT) && key === 'A') {
 		dino.addAnimation('animate', runningDino);
+		dino.mirrorX(-1);
 		dino.setSpeed(4, 180);
-		dino.mirrorX(-1);
+		scrollSpeed = 0;
 	}
-	if(keyIsDown(SHIFT) && keyIsDown(RIGHT_ARROW)
-	|| keyIsDown(SHIFT) && key === 'D') {
+	if (keyIsDown(RIGHT_ARROW) || key === 'd') {
 		dino.addAnimation('animate', runningDino);
-		dino.setSpeed(4, 0);
 		dino.mirrorX(1);
+		dino.setSpeed(4, 0);
+		scrollSpeed = 1.3;
+	}
+	if (keyIsDown(UP_ARROW) || key === 'w') {
+		if (JUMPQUEUE < JUMPLIMIT) {
+			dino.addAnimation('animate', jumpingDino)
+			dino.velocity.y = JUMP;
+			JUMPQUEUE++;
+		}
+	}
+	if (keyIsDown(SHIFT) && key === 'W') {
+		if (JUMPQUEUE < JUMPLIMIT) {
+			dino.addAnimation('animate', jumpingDino)
+			dino.velocity.y = JUMP;
+			JUMPQUEUE++;
+		}
 	}
 }
 
 function keyReleased() {
-	if(keyCode === UP_ARROW || key === 'W' || key === 'w') {
-		return false
+	if (keyCode === UP_ARROW || key === 'W' || key === 'w') {
+		return false;
 	}
-	dino.addAnimation('animate', idleDino);
+	dino.addAnimation('animate', walkingDino);
 	dino.setSpeed(0, 0);
+	scrollSpeed = 0.5;
 }
