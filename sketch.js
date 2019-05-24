@@ -118,6 +118,7 @@ function startScreen() {
 	textAlign(CENTER);
 	textSize(60);
 	fill(255);
+	textFont('Luckiest Guy');
 	text('WELCOME TO DINO GAME', width / 2, height / 4)
 	text('CLICK TO START', width / 2, height / 2.5);
 }
@@ -143,7 +144,7 @@ function gameOn() {
 	}
 	// Push dino back to prevent getting out of view
 	if (dino.position.x < 0) {
-		dino.position.x += 5;
+		dino.position.x = 40;
 	}
 	if (dino.position.x > width) {
 		dino.position.x += -5;
@@ -154,14 +155,16 @@ function gameOn() {
 function collisionDetect() {
 
 // Adds life counter on screen
-	textSize(50)
-	fill(255)
+	textSize(100);
+	fill(255);
+	textFont('Luckiest Guy');
 	text(HEALTH, 100, 100);
 
 	enemies.forEach((enemy) => {
 		dino.collide(enemy, pushBack = () => {
 			enemy.addAnimation('animate', attackEnemy);
 			dino.velocity.x += -10;
+			enemy.position.x += +5;
 			dino.velocity.y += -5;
 
 			if (dino.position === GROUND) {
@@ -177,13 +180,15 @@ function collisionDetect() {
 					dino.animation.stop();
 				}, 500);
 				setTimeout(function () {
-					noLoop()
+					noLoop();
+					textFont('Luckiest Guy');
 					text('Game Over :/', width / 4, height / 2);
-					textSize(100)
-					fill(255)
-					removeSprite(dino)
-					removeSprite(enemy)
-				}, 1000);
+					textSize(100);
+					fill(255);
+					removeSprite(dino);
+					removeSprite(enemy);
+
+				}, 3000);
 			}
 		});
 	});
@@ -235,7 +240,7 @@ function keyPressed() {
 }
 
 function keyReleased() {
-	if (keyCode === UP_ARROW || key === 'W' || key === 'w') {
+	if (keyCode === UP_ARROW || key === 'w') {
 		return false;
 	}
 	dino.addAnimation('animate', walkingDino);
