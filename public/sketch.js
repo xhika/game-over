@@ -94,7 +94,7 @@ function spawningEnemies() {
 		let randomEnemySpeed = random(1, 7);
 		let enemy = createSprite(width + 500, GROUND);
 		enemy.position.x += random(0, 10000);
-		enemy.scale = .3
+		enemy.scale = random(0.1, 0.5)
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
 		enemy.mirrorX(-1);
@@ -161,6 +161,16 @@ function collisionDetect() {
 	text(HEALTH, 100, 100);
 
 	enemies.forEach((enemy) => {
+		dino.collide(enemy, hitHead = () => {
+			dinoY = dino.position.y;
+			enemyY = enemy.position.y;
+
+			if(dinoY < enemyY) {
+				enemy.setSpeed(5, 90);
+				enemy.mirrorY(-1);
+				HEALTH = HEALTH
+			}
+		});
 		dino.collide(enemy, pushBack = () => {
 			enemy.addAnimation('animate', attackEnemy);
 			dino.velocity.x += -10;
