@@ -237,6 +237,10 @@ function keyPressed() {
 			JUMPQUEUE++;
 		}
 	}
+	// "Cheat" add life
+	if(key === 'p') {
+		HEALTH++
+	}
 }
 
 function keyReleased() {
