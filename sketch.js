@@ -152,6 +152,12 @@ function gameOn() {
 
 // Detect collision
 function collisionDetect() {
+
+// Adds life counter on screen
+	textSize(50)
+	fill(255)
+	text(HEALTH, 100, 100);
+
 	enemies.forEach((enemy) => {
 		dino.collide(enemy, pushBack = () => {
 			enemy.addAnimation('animate', attackEnemy);
@@ -198,7 +204,7 @@ function mousePressed() {
 	}, 500);
 }
 
-// // Movement
+// Movement
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
 		dino.addAnimation('animate', runningDino);
