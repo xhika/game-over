@@ -2,6 +2,7 @@
 function preload() {
 	startGameImg = loadImage('../assets/environment/start-screen.png');
 	nyan = loadAnimation('../assets/nyan.png');
+	fireBall = loadAnimation('../assets/fireball.png');
 	environment = loadImage('../assets/environment/Cartoon_Forest_BG_01.png');
 	idleDino = loadAnimation('../assets/dino/Idle1.png', '../assets/dino/Idle2.png',
 		'../assets/dino/Idle3.png', '../assets/dino/Idle4.png',
@@ -79,6 +80,9 @@ function setup() {
 	dino.addAnimation('dead', deadDino)
 	dino.addAnimation('jump', jumpingDino)
 
+	// Create fireball
+	fireBalls = createSprite(-100,-100)
+
 	//Create Nyan
 	nyanCat = createSprite(width - 100, height / 2);
 	nyanCat.scale = 0.3
@@ -151,6 +155,16 @@ function gameOn() {
 	}
 }
 
+function DRACARYS() {
+	if (key === 'x') {
+		fireBalls = createSprite(dino.position.x + 10, dino.position.y);
+		fireBalls.scale = 0.1
+		fireBalls.addAnimation('animate', fireBall);
+		fireBalls.setCollider("circle", 0, 0, 250);
+		fireBalls.setSpeed(7, 0);
+	}
+}
+
 // Detect collision
 function collisionDetect() {
 
@@ -160,7 +174,15 @@ function collisionDetect() {
 	textFont('Luckiest Guy');
 	text(HEALTH, 100, 100);
 
+
 	enemies.forEach((enemy) => {
+
+		fireBalls.collide(enemy, rip = () => {
+			fireBalls.remove();
+			enemy.setSpeed(5, 90);
+			enemy.mirrorY(-1);
+		});
+
 		dino.collide(enemy, hitHead = () => {
 			dinoY = dino.position.y;
 			enemyY = enemy.position.y;
@@ -168,9 +190,11 @@ function collisionDetect() {
 			if(dinoY < enemyY) {
 				enemy.setSpeed(5, 90);
 				enemy.mirrorY(-1);
+				// enemy.remove();
 				HEALTH = HEALTH
 			}
 		});
+
 		dino.collide(enemy, pushBack = () => {
 			enemy.addAnimation('animate', attackEnemy);
 			dino.velocity.x += -10;
@@ -247,6 +271,9 @@ function keyPressed() {
 			JUMPQUEUE++;
 		}
 	}
+	// Shoot fireball
+	DRACARYS();
+
 	// "Cheat" add life
 	if(key === 'p') {
 		HEALTH++
