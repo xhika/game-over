@@ -2,6 +2,8 @@
 
 Game Over is a game created with [p5.js](https://p5js.org/)
 
+![screenshot](preview.gif)
+
 Creators:
 [Amin](https://github.com/Amin-Mohamed) &
 [Laureta](https://github.com/xhika)
@@ -18,7 +20,7 @@ git clone git@github.com:xhika/game-over.git
 ## Usage
 
 ```
-
+Simply use a your prefered local server to run the game.
 ```
 ## Pull requests
 For an overview of all pull requests click [here](https://github.com/xhika/game-over/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed)
@@ -29,9 +31,11 @@ For an overview of all pull requests click [here](https://github.com/xhika/game-
 
 [Canvas & Animation](https://github.com/xhika/game-over/pull/1)
 
-[Enemies](https://github.com/xhika/game-over/pull/7)
+[Enemies](https://github.com/xhika/game-over/pull/11)
 
 [Collision](https://github.com/xhika/game-over/pull/8)
+
+[Cheats](https://github.com/xhika/game-over/pull/21)
 
 ## Testers
 *TBA*
