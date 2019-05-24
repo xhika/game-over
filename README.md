@@ -1,4 +1,5 @@
-# game-over
+# game-over [![Netlify Status](https://api.netlify.com/api/v1/badges/8d641f43-eccd-450d-8b6b-2d4ce49def79/deploy-status)](https://app.netlify.com/sites/blissful-payne-164eaf/deploys)
+[![StyleCI](https://github.styleci.io/repos/185988222/shield?branch=master)](https://github.styleci.io/repos/185988222)
 
 Game Over is a game created with [p5.js](https://p5js.org/)
 
