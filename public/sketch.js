@@ -15,7 +15,7 @@ let GRAVITY = 0.4;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
-let ENEMYCOUNT = 10;
+let ENEMYCOUNT = 30;
 
 let enemies = [];
 
@@ -132,7 +132,7 @@ function startScreen() {
 	textSize(60);
 	fill(255);
 	textFont('Luckiest Guy');
-	text('WELCOME TO DINO GAME', width / 2, height / 4)
+	text('WELCOME TO DINO GAME', width / 2, height / 4);
 	text('CLICK TO START', width / 2, height / 2.5);
 }
 

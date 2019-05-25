@@ -27,7 +27,7 @@ function spawningEnemies() {
 	for (let i = 0; i < ENEMYCOUNT; i++) {
 		let randomEnemySpeed = random(1, 7);
 		let enemy = createSprite(width + 500, GROUND);
-		enemy.position.x += random(0, 7000);
+		enemy.position.x += random(200, 7000);
 		enemy.scale = random(0.2, 0.5);
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
