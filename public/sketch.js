@@ -47,12 +47,10 @@ function preload() {
 }
 
 // Environment properties
-let bgImg;
 let x = 0;
 let newX;
 let scrollSpeed = 0.5;
-let welcomScreen = 0;
-
+let screen = 0;
 // Get viewport
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -97,8 +95,8 @@ function spawningEnemies() {
 	for (let i = 0; i < ENEMYCOUNT; i++) {
 		let randomEnemySpeed = random(1, 7);
 		let enemy = createSprite(width + 500, GROUND);
-		enemy.position.x += random(0, 10000);
-		enemy.scale = random(0.1, 0.5)
+		enemy.position.x += random(0, 7000);
+		enemy.scale = random(0.2, 0.5);
 		enemy.addAnimation('animate', walkingEnemy);
 		enemy.setCollider("rectangle", 20, 5, 204, 390);
 		enemy.mirrorX(-1);
@@ -108,12 +106,13 @@ function spawningEnemies() {
 }
 
 function draw() {
-	if (welcomScreen == 0) {
-		startScreen()
-	} else if (welcomScreen == 1) {
-		gameOn();
-		drawSprites();
-		collisionDetect();
+	console.log(screen);
+	if (screen == 0) {
+		startScreen();
+	} else if (screen == 1) {
+		gameStart();
+	} else if (screen == 2) {
+		endScreen();
 	}
 }
 
@@ -125,6 +124,12 @@ function startScreen() {
 	textFont('Luckiest Guy');
 	text('WELCOME TO DINO GAME', width / 2, height / 4)
 	text('CLICK TO START', width / 2, height / 2.5);
+}
+
+function gameStart() {
+	gameOn();
+	drawSprites();
+	collisionDetect();
 }
 
 function gameOn() {
@@ -165,18 +170,14 @@ function DRACARYS() {
 	}
 }
 
-// Detect collision
 function collisionDetect() {
-
 // Adds life counter on screen
 	textSize(100);
 	fill(255);
 	textFont('Luckiest Guy');
 	text(HEALTH, 100, 100);
 
-
 	enemies.forEach((enemy) => {
-
 		fireBalls.collide(enemy, rip = () => {
 			fireBalls.remove();
 			enemy.setSpeed(5, 90);
@@ -214,18 +215,22 @@ function collisionDetect() {
 					dino.animation.stop();
 				}, 500);
 				setTimeout(function () {
-					noLoop();
-					textFont('Luckiest Guy');
-					text('Game Over :/', width / 4, height / 2);
-					textSize(100);
-					fill(255);
-					removeSprite(dino);
-					removeSprite(enemy);
-
-				}, 3000);
+					endScreen();
+				}, 1500);
 			}
 		});
 	});
+};
+
+function endScreen() {
+	noLoop();
+	textAlign(CENTER);
+	textFont('Luckiest Guy');
+	textSize(60);
+	fill(255);
+	text('Game Over :/', width / 2, height / 2);
+	text('click to play again', width / 2, height / 1.5);
+	screen = 2;
 };
 
 // Resize window
@@ -235,10 +240,10 @@ function windowResized() {
 
 function mousePressed() {
 	setTimeout(function () {
-		if (welcomScreen == 0) {
-			welcomScreen = 1
-		} else if (welcomScreen == 2) {
-			welcomScreen = 0
+		if (screen == 0) {
+			screen = 1;
+		} else if (screen == 2) {
+			screen = 0;
 		}
 	}, 500);
 }
@@ -288,3 +293,7 @@ function keyReleased() {
 	dino.setSpeed(0, 0);
 	scrollSpeed = 0.5;
 }
+
+
+
+
