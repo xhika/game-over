@@ -1,5 +1,4 @@
-# game-over [![Netlify Status](https://api.netlify.com/api/v1/badges/8d641f43-eccd-450d-8b6b-2d4ce49def79/deploy-status)](https://app.netlify.com/sites/blissful-payne-164eaf/deploys)
-[![StyleCI](https://github.styleci.io/repos/185988222/shield?branch=master)](https://github.styleci.io/repos/185988222)
+# game-over [![Netlify Status](https://api.netlify.com/api/v1/badges/8d641f43-eccd-450d-8b6b-2d4ce49def79/deploy-status)](https://app.netlify.com/sites/blissful-payne-164eaf/deploys) [![StyleCI](https://github.styleci.io/repos/185988222/shield?branch=master)](https://github.styleci.io/repos/185988222)
 
 Game Over is a game created with [p5.js](https://p5js.org/)
 
@@ -21,7 +20,7 @@ git clone git@github.com:xhika/game-over.git
 ## Usage
 
 ```
-Simply use a your prefered local server to run the game.
+Install node modules first with npm install, then npm run to start the project.
 ```
 ## Pull requests
 For an overview of all pull requests click [here](https://github.com/xhika/game-over/pulls?q=is%3Apr+sort%3Aupdated-desc+is%3Aclosed)
@@ -37,6 +36,8 @@ For an overview of all pull requests click [here](https://github.com/xhika/game-
 [Collision](https://github.com/xhika/game-over/pull/8)
 
 [Cheats](https://github.com/xhika/game-over/pull/21)
+
+[Waves](https://github.com/xhika/game-over/pull/27)
 
 ## Testers
 *TBA*

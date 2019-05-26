@@ -92,7 +92,7 @@ function collisionDetect() {
 	textSize(100);
 	fill(255);
 	textFont('Luckiest Guy');
-	text(HEALTH, 100, 100);
+	text('HP: ' + HEALTH, 100, 100);
 
 	enemies.forEach((enemy) => {
 		fireBalls.collide(enemy, rip = () => {
@@ -207,7 +207,7 @@ function DRACARYS() {
 		fireBalls = createSprite(dino.position.x + 10, dino.position.y);
 		fireBalls.scale = 0.1
 		fireBalls.addAnimation('animate', fireBall);
-		fireBalls.setCollider("circle", 0, 0, 250);
+		fireBalls.setCollider('circle', 0, 0, 250);
 		fireBalls.setSpeed(7, 0);
 	}
 }

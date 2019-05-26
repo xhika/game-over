@@ -6,7 +6,7 @@ function setup() {
 	dino = createSprite(width / 2, GROUND);
 	dino.scale = .3;
 	dino.addAnimation('walk', walkingDino)
-	dino.setCollider("rectangle", 0, 5, 204, 390);
+	dino.setCollider('rectangle', 0, 5, 204, 390);
 	dino.addAnimation('dead', deadDino)
 	dino.addAnimation('jump', jumpingDino)
 	dino.addAnimation('run', runningDino)
@@ -14,7 +14,7 @@ function setup() {
 	// Create fireball
 	fireBalls = createSprite(-100, -100)
 
-	//Create Nyan
+	// Create Nyan
 	nyanCat = createSprite(width - 100, height / 2);
 	nyanCat.scale = 0.3
 	nyanCat.addAnimation('animate', nyan);
@@ -35,7 +35,7 @@ function spawningEnemies(waveIndex) {
 		enemy.position.x += random(1200, 1500);
 		enemy.scale = random(0.2, 0.5);
 		enemy.addAnimation('animate', walkingEnemy);
-		enemy.setCollider("rectangle", 20, 5, 204, 390);
+		enemy.setCollider('rectangle', 20, 5, 204, 390);
 		enemy.mirrorX(-1);
 		enemy.setSpeed(randomEnemySpeed, 180)
 		enemies.push(enemy)
