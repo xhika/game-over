@@ -142,8 +142,8 @@ function endScreen() {
 	textFont('Luckiest Guy');
 	textSize(60);
 	fill(255);
-	text('Game Over :/', width / 2, height / 2);
-	text('click to play again', width / 2, height / 1.5);
+	text('Game Over :/', width / 2, height / 4);
+	text('click to play again', width / 2, height / 2.5);
 	screen = 2;
 };
 

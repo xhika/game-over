@@ -2,7 +2,7 @@ function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
 		dino.addAnimation('animate', runningDino);
 		dino.mirrorX(-1);
-		dino.setSpeed(0.5, 180);
+		dino.setSpeed(4, 180);
 		scrollSpeed = 0;
 	}
 	if (keyIsDown(RIGHT_ARROW) || key === 'd') {
