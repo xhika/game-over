@@ -15,18 +15,41 @@ let GRAVITY = 0.4;
 let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
-let ENEMYCOUNT = 30;
+
+let WAVES = [
+	{ count: 5, speed: { min: 1, max: 7 } },
+	{ count: 10, speed: { min: 2, max: 6 } },
+	{ count: 20, speed: { min: 4, max: 8 } },
+	{ count: 30, speed: { min: 2, max: 10 } },
+	{ count: 40, speed: { min: 4, max: 15 } },
+	{ count: 50, speed: { min: 10, max: 20 } },
+];
+let LASTWAVE = false;
+let WAVEDELAY = 200;
+let WAVEDELAYITERATION = 0;
+let KILLCOUNT = 0;
 
 let enemies = [];
 
 function draw() {
-	console.log(screen);
 	if (screen == 0) {
 		startScreen();
 	} else if (screen == 1) {
 		gameStart();
 	} else if (screen == 2) {
 		endScreen();
+	}
+
+	if (LASTWAVE !== false && enemies.length <= 0) {
+		WAVEDELAYITERATION++
+		if (WAVEDELAYITERATION > WAVEDELAY) {
+			spawningEnemies(LASTWAVE + 1);
+			WAVEDELAYITERATION = 0
+		}
+	}
+
+	if (enemies.length > 0) {
+		removeOutsiders();
 	}
 }
 
@@ -74,8 +97,7 @@ function collisionDetect() {
 	enemies.forEach((enemy) => {
 		fireBalls.collide(enemy, rip = () => {
 			fireBalls.remove();
-			enemy.setSpeed(5, 90);
-			enemy.mirrorY(-1);
+			isDead(enemy);
 		});
 
 		dino.collide(enemy, hitHead = () => {
@@ -83,10 +105,8 @@ function collisionDetect() {
 			enemyY = enemy.position.y;
 
 			if(dinoY < enemyY) {
-				enemy.setSpeed(5, 90);
-				enemy.mirrorY(-1);
-				// enemy.remove();
-				HEALTH = HEALTH
+				isDead(enemy);
+				HEALTH = HEALTH;
 			}
 		});
 
@@ -115,13 +135,47 @@ function collisionDetect() {
 		});
 	});
 };
+function isDead(enemy) {
+	enemy.setSpeed(5, 90);
+	enemy.mirrorY(-1);
 
+	removeEnemy(enemy);
+	setTimeout(function () {
+		enemy.remove();
+	}, 600);
+
+	KILLCOUNT++
+	fill(255)
+	textSize(100)
+	text(KILLCOUNT)
+	console.log('Killed ' + KILLCOUNT)
+}
+function removeEnemy(enemy) {
+	// Iterating through enemies to find the victim's index
+	let index = enemies.findIndex((target) => {
+		return target.depth === enemy.depth;
+	});
+
+	delete enemies[index];
+
+	// Reindex enemies array
+	enemies = enemies.filter(val => val);
+}
+function removeOutsiders() {
+	enemies.forEach((enemy) => {
+		if(enemy.position.x < 0) {
+			removeEnemy(enemy);
+			enemy.remove();
+		}
+	})
+}
 function mousePressed() {
 	setTimeout(function () {
 		if (screen == 0) {
 			screen = 1;
 		} else if (screen == 2) {
 			screen = 0;
+			loop();
 		}
 	}, 500);
 }
@@ -136,7 +190,9 @@ function startScreen() {
 	text('CLICK TO START', width / 2, height / 2.5);
 }
 
+
 function endScreen() {
+	screen = 2;
 	noLoop();
 	textAlign(CENTER);
 	textFont('Luckiest Guy');
@@ -144,7 +200,6 @@ function endScreen() {
 	fill(255);
 	text('Game Over :/', width / 2, height / 4);
 	text('click to play again', width / 2, height / 2.5);
-	screen = 2;
 };
 
 function DRACARYS() {

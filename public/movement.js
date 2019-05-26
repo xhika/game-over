@@ -1,19 +1,19 @@
 function keyPressed() {
 	if (keyIsDown(LEFT_ARROW) || key === 'a') {
-		dino.addAnimation('animate', runningDino);
+		dino.changeAnimation('run');
 		dino.mirrorX(-1);
 		dino.setSpeed(4, 180);
 		scrollSpeed = 0;
 	}
 	if (keyIsDown(RIGHT_ARROW) || key === 'd') {
-		dino.addAnimation('animate', runningDino);
+		dino.changeAnimation('run');
 		dino.mirrorX(1);
 		dino.setSpeed(0.5, 0);
 		scrollSpeed = 3;
 	}
 	if (keyIsDown(UP_ARROW) || key === 'w') {
 		if (JUMPQUEUE < JUMPLIMIT) {
-			dino.addAnimation('animate', jumpingDino)
+			dino.changeAnimation('jump')
 			dino.velocity.y = JUMP;
 			JUMPQUEUE++;
 		}
@@ -38,7 +38,7 @@ function keyReleased() {
 	if (keyCode === UP_ARROW || key === 'w') {
 		return false;
 	}
-	dino.addAnimation('animate', walkingDino);
+	dino.changeAnimation('walk');
 	dino.setSpeed(0, 0);
 	scrollSpeed = 0.5;
 }
