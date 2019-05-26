@@ -94,6 +94,10 @@ function collisionDetect() {
 	textFont('Luckiest Guy');
 	text('HP: ' + HEALTH, 100, 100);
 
+	textSize(100);
+	fill(255);
+	textFont('Luckiest Guy');
+	text('x: ' + KILLCOUNT, width - 250, 100);
 	enemies.forEach((enemy) => {
 		fireBalls.collide(enemy, rip = () => {
 			fireBalls.remove();

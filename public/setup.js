@@ -25,7 +25,7 @@ function setup() {
 }
 
 function spawningEnemies(waveIndex) {
-	KILLCOUNT = 0
+	// KILLCOUNT = 0
 
 	let WAVE = WAVES[waveIndex]
 	console.log('WAVE ' + waveIndex)
