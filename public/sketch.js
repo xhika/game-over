@@ -28,6 +28,7 @@ let LASTWAVE = false;
 let WAVEDELAY = 200;
 let WAVEDELAYITERATION = 0;
 let KILLCOUNT = 0;
+let WAVESCOUNT = 0;
 
 let enemies = [];
 
@@ -60,8 +61,18 @@ function gameStart() {
 }
 
 function gameOn() {
-	image(environment, x, 0, width, height);
-	image(environment, newX, 0, width, height);
+
+	if (WAVESCOUNT == 5) {
+		image(environmentLevel1, x, 0, width, height);
+		image(environmentLevel1, newX, 0, width, height);
+	} else if (WAVESCOUNT == 15) {
+		image(environmentLevel2, x, 0, width, height);
+		image(environmentLevel2, newX, 0, width, height);
+	} else if (WAVESCOUNT >= 35) {
+		image(environmentLevel3, x, 0, width, height);
+		image(environmentLevel3, newX, 0, width, height);
+	}
+
 	x -= scrollSpeed;
 	newX -= scrollSpeed;
 
