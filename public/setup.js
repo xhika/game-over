@@ -15,10 +15,10 @@ function setup() {
 	fireBalls = createSprite(-100, -100)
 
 	// Create Nyan
-	nyanCat = createSprite(width - 100, height / 2);
+	nyanCat = createSprite(width + 600, height / 2);
 	nyanCat.scale = 0.3
 	nyanCat.addAnimation('animate', nyan);
-	nyanCat.setSpeed(random(2, 50), 180)
+	nyanCat.setSpeed(random(10, 20), 180)
 	nyanCat.mirrorX(-1);
 
 	spawningEnemies(0);

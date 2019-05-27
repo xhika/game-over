@@ -39,6 +39,9 @@ function keyReleased() {
 		return false;
 	}
 	dino.changeAnimation('walk');
+	if(HEALTH === 0) {
+		dino.changeAnimation('dead');
+	}
 	dino.setSpeed(0, 0);
 	scrollSpeed = 0.5;
 }

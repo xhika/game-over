@@ -91,7 +91,10 @@ function gameOn() {
 	}
 	// Push dino back to prevent getting out of view
 	if (dino.position.x < 0) {
-		dino.position.x = 40;
+		dino.position.x += 100;
+		setTimeout(function() {
+			dino.setSpeed(3, 0)
+		}, 500);
 	}
 	if (dino.position.x > width) {
 		dino.position.x += -5;
@@ -145,7 +148,7 @@ function collisionDetect() {
 				}, 500);
 				setTimeout(function () {
 					endScreen();
-				}, 1500);
+				}, 500);
 			}
 		});
 	});
