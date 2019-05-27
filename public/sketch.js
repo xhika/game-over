@@ -16,6 +16,7 @@ let JUMPLIMIT = 2;
 let JUMPQUEUE = 0;
 let HEALTH = 3;
 
+// Enemies properties
 let WAVES = [
 	{ count: 5, speed: { min: 1, max: 7 } },
 	{ count: 10, speed: { min: 2, max: 6 } },
@@ -29,7 +30,6 @@ let WAVEDELAY = 200;
 let WAVEDELAYITERATION = 0;
 let KILLCOUNT = 0;
 let WAVESCOUNT = 0;
-
 let enemies = [];
 
 function draw() {
@@ -153,6 +153,7 @@ function collisionDetect() {
 		});
 	});
 };
+
 function isDead(enemy) {
 	enemy.setSpeed(5, 90);
 	enemy.mirrorY(-1);
@@ -168,12 +169,12 @@ function isDead(enemy) {
 	text(KILLCOUNT)
 	console.log('Killed ' + KILLCOUNT)
 }
+
 function removeEnemy(enemy) {
 	// Iterating through enemies to find the victim's index
 	let index = enemies.findIndex((target) => {
 		return target.depth === enemy.depth;
 	});
-
 	delete enemies[index];
 
 	// Reindex enemies array
@@ -187,6 +188,7 @@ function removeOutsiders() {
 		}
 	})
 }
+
 function mousePressed() {
 	setTimeout(function () {
 		if (screen == 0) {
