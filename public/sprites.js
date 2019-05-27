@@ -1,8 +1,12 @@
 function preload() {
-	startGameImg = loadImage('../assets/environment/start-screen.png');
+	startGameImg = loadImage('../assets/environment/start-screen-min.png');
+	environmentLevel1 = loadImage('../assets/environment/environment-1-min.png');
+	environmentLevel2 = loadImage('../assets/environment/environment-2-min.png');
+	environmentLevel3 = loadImage('../assets/environment/environment-3-min.png');
+
 	nyan = loadAnimation('../assets/nyan.png');
 	fireBall = loadAnimation('../assets/fireball.png');
-	environment = loadImage('../assets/environment/Cartoon_Forest_BG_01.png');
+
 	idleDino = loadAnimation('../assets/dino/Idle1.png', '../assets/dino/Idle2.png',
 		'../assets/dino/Idle3.png', '../assets/dino/Idle4.png',
 		'../assets/dino/Idle5.png', '../assets/dino/Idle6.png',

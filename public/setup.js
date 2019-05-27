@@ -39,6 +39,7 @@ function spawningEnemies(waveIndex) {
 		enemy.mirrorX(-1);
 		enemy.setSpeed(randomEnemySpeed, 180)
 		enemies.push(enemy)
+		WAVESCOUNT++;
 	};
 	LASTWAVE = waveIndex;
 }
