@@ -193,7 +193,6 @@ function mousePressed() {
 			screen = 1;
 		} else if (screen == 2) {
 			screen = 0;
-			loop();
 		}
 	}, 500);
 }
