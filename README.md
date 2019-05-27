@@ -42,6 +42,19 @@ For an overview of all pull requests click [here](https://github.com/xhika/game-
 ## Testers
 *TBA*
 
+## Feedback
+### General
+- We can't really see why React would be needed or usefull to this project. It also makes the folder structure kind of messy. We'd propose to either remove it or implement it in a usefull way with better folder structure.
+- Be consistent with new-lines between different code-sections.
+- Over all, pretty cool game! We've enjoyed it a lot! :)
+
+### Specific
+ - [public/setup.js:28](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/setup.js#L28) Remove commented code.
+ - [public/setup.js:31](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/setup.js#L31) Remove debug log.
+ - [public/scetch.js:169](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/sketch.js#L169) Remove debug log
+ - [public/scetch.js:222](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/sketch.js#L222) Awesome GOT Reference, but the function name should be generic so everyone can understand.
+ - [public/movement.js:29](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/movement.js#L29) Same feedback as [public/scetch.js:222](https://github.com/xhika/game-over/blob/d72c6bbe2a2fb51809eb076fb3db7be7f8d02511/public/sketch.js#L222).
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
