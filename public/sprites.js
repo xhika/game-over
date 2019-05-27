@@ -3,7 +3,6 @@ function preload() {
 	environmentLevel1 = loadImage('../assets/environment/environment-1-min.png');
 	environmentLevel2 = loadImage('../assets/environment/environment-2-min.png');
 	environmentLevel3 = loadImage('../assets/environment/environment-3-min.png');
-
 	nyan = loadAnimation('../assets/environment/nyan-min.png');
 	fireBall = loadAnimation('../assets/environment/fireball-min.png');
 
